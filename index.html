@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="job.css">
+    <link rel="stylesheet" href="colortube.css">
+</head>
+<body id="body">
+    <div class="info-container">
+        <div class="glow-border"></div>
+        <h2>Информация о сервере</h2>
+        <div class="ip-address" onclick="copyText()">mc.prescube.xyz</div>
+        <p>Внимание! Для входа на сервер необходимо подать заявку в белый список.</p>
+    </div>
+    <script src="script.js"></script>
+    <script>
+     
+        document.querySelector('.info-container').addEventListener('mousemove', function(e) {
+            const card = this;
+            const { width, height, left, top } = card.getBoundingClientRect();
+            const x = e.clientX - left;
+            const y = e.clientY - top;
+            const rotateX = ((y / height) - 0.5) * 30;
+            const rotateY = ((x / width) - 0.5) * -30;
+            card.style.setProperty('--rotateX', `${rotateY}deg`);
+            card.style.setProperty('--rotateY', `${rotateX}deg`);
+        });
+
+        
+        function copyText() {
+            const ip = document.querySelector('.ip-address').textContent;
+            navigator.clipboard.writeText(ip).then(() => {
+                let setIn = setTimeout(function() {
+                    let div = document.createElement('div');
+                    div.classList.add('selectCopyPaste');
+                    div.textContent += 'IP Address copy';
+                    document.body.appendChild(div);
+                    setInterval(function() {
+                        div.classList.add('show');
+                        setInterval(function() {
+                            div.remove();
+                        },1000);
+                    }, 3000);
+                }, 10);
+
+            });
+        }
+    </script>
+
+</body>
+</html>
